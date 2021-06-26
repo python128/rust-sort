@@ -1,5 +1,4 @@
 // A simple code to make 'x' amount of random numbers(floats).
-// Equivalent-ish of "/mnt/c/Users/tejas/Downloads/Tejas/PYTHON PROGRAMS/1000_Numbers.py"
 
 /* Test writing format:-
  * 	'1' = test number
@@ -18,43 +17,27 @@ use std::fs::OpenOptions;
 use std::io::Write;
 
 fn main() {
-	let help = "
- Help Message:
- Arguments:
-	Necessary:
-		File-Name = A name for the file. Append it with '.csv'
-		Amount of Numbers = Amount of random numbers to be generated.
-	Optional:
-		range = range of random numbers. Without, it will be 0-1000(float)
-";
-
-	let file = std::env::args().nth(1).expect(help);
+	let file = std::env::args().nth(1).expect("Give File");
 	let numofnums: i32 = std::env::args()
 		.nth(2)
-		.expect(help)
+		.expect("Give Num - only i32")
 		.parse()
 		.unwrap();
-	let range: f64 = std::env::args()
-		.nth(3)
-		.expect(help)
-		.parse()
-		.unwrap_or(1000.0);
 
 	let mut rng = rand::thread_rng();
 	let mut nums = vec![];
 
 	for _num in 0..numofnums {
-		let num = rng.gen_range(0.1..range);
+		let num = rng.gen_range(0.1..1000.0);
 		let num = num.to_string();
 		nums.push(num);
 	}
 	
-	let fnums = nums.join(", ");
+	let fnums = nums.join(",\n");
 	println!("{} numbers", nums.len());
 
-	let filetowrite = &file;
-	create_file(filetowrite.to_string());
-	write_to_file(filetowrite.to_string(), fnums, numofnums);
+	create_file(file.to_string());
+	write_to_file(file.to_string(), fnums, numofnums);
 }
 
 fn create_file(file_name: String) {

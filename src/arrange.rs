@@ -31,6 +31,7 @@ fn read(filename: String) {
 	}
 
 	vect.sort_by(|a, b| a.partial_cmp(b).unwrap()); //Sorting
+	// let vect = sortme(vect);
 
 	for num in 0..vect.len() { //for String
 		let a_num = vect[num].to_string(); //conversion
@@ -66,4 +67,19 @@ fn write_to_file(file: String, text: String) {
 		.expect("\nWrite Failed");
 
 	println!("Successfully appended sorted list of numbers to file {:?}.", file);
+}
+
+fn sortme(list: Vec<f64>) {
+	for i in 0..list.len() {
+		let mut big = list[i];
+		for j in 0..list.len() {
+			let num2 = list[i+1];
+			if big < num2 {
+				big = num2;
+			}
+		let ans: Vec<f64> = vec![];
+		ans.push(big);
+		println!("{:?}", ans);
+		}
+	}
 }
