@@ -3,11 +3,11 @@ A simple program to make a file of random float values, and arrange them.
 
 ## How to install
 - git clone the repository in you prefered directory.
-- run `cargo run`. [View How to use]
-- To arrange, use `./arrange` [view How to use]
+- run `cargo run`. [View [How to use](https://github.com/python128/rust-sort#how-to-use)]
+- To arrange, use `./arrange` [view [How to use](https://github.com/python128/rust-sort#how-to-use)]
 
 ## How to use
-- After cloning the repo[view How to install], use by:
+- After cloning the repo[view [How to install](https://github.com/python128/rust-sort#how-to-install)], use by:
 	## Creating Random Numbers
 	- There are two arguments:
 	- **file** -> Provide the file name in which to write the random numbers.[prefereably end with `.csv`]
