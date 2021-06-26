@@ -1,85 +1,72 @@
-// Ascending order
+// Sorting
+
+// Importing std
 use std::io::Read;
 use std::fs::OpenOptions;
 use std::io::Write;
 
-fn main() {
-	let file = std::env::args().nth(1).expect("Give a file to sort!");
-	make_file("docs/ascending.csv".to_string());
+fn main() { //Main
+	let file = std::env::args().nth(1).expect("Give a file to sort!"); //Getting file to sort
+	//Making Ascending and descending.csv files.
+	make_file("docs/ascending.csv".to_string()); 
 	make_file("docs/descending.csv".to_string());
-	read(file);
-	println!("Have a look at docs/ascending.csv and/or docs/descending.csv!");
+	read(file); //reading file
+	println!("Have a look at docs/ascending.csv and/or docs/descending.csv!"); //After all
 }
 
 fn read(filename: String) {
-	let mut file = std::fs::File::open(&filename).unwrap();
-	let mut contents = String::new();
+	let mut file = std::fs::File::open(&filename).unwrap(); //Getting file and unwrapping
+	let mut contents = String::new(); //Making a string for contents
 	file
-		.read_to_string(&mut contents)
+		.read_to_string(&mut contents) //reading
 		.unwrap();
-	let contents = &contents.to_string();
+	let contents = &contents.to_string(); //Converting to string(as it is stored in f64 format).
 
-	let split = contents.split(", "); //splitting
-	let vec: Vec<&str> = split.collect(); //collecting
-	let mut vect = vec![]; //vect1 (for f64 val)
-	let mut vect2 = vec![]; //vector2 (for String val)
-	let mut vect4: Vec<String> = vec![];
+	let split = contents.split(", "); //splitting the contents
+	let vec: Vec<&str> = split.collect(); //collecting them
+	let mut vect = vec![]; //vect1 (for f64 val) [ascending]
+	let mut vect2 = vec![]; //vector2 (for String val) [ascending]
+	let mut vect4: Vec<String> = vec![]; // for descending
 
 	for num in 0..vec.len() { //Adding to vector
-		let fnum: f64 = vec[num].parse().unwrap();
-		vect.push(fnum);
+		let fnum: f64 = vec[num].parse().unwrap(); //collecting the numbers seperately
+		vect.push(fnum); //pushing to vector
 	}
 
 	vect.sort_by(|a, b| a.partial_cmp(b).unwrap()); //Sorting
-	// let vect = sortme(vect);
 
-	for num in 0..vect.len() { //for String
-		let a_num = vect[num].to_string(); //conversion
-		vect2.push(a_num); //pushing
+	for num in 0..vect.len() { //for loop [for String]
+		let a_num = vect[num].to_string(); //conversion to string
+		vect2.push(a_num); //pushing to vector
 	}
 
-	let vect3: Vec<f64> = vect.into_iter().rev().collect(); //reversing the vec
+	let vect3: Vec<f64> = vect.into_iter().rev().collect(); //reversing the vec [for descending]
 
-	for num in 0..vect3.len() {
-		let ab = vect3[num].to_string();
-		vect4.push(ab);
+	for num in 0..vect3.len() { //for loop [for descending]
+		let ab = vect3[num].to_string(); //converting to string
+		vect4.push(ab); //pushing
 	}
 
 	let vect2 = vect2.join(", "); //joining as string
 	let vect4 = vect4.join(", "); //joining as string
-	write_to_file("docs/ascending.csv".to_string(), vect2);
-	write_to_file("docs/descending.csv".to_string(), vect4);
+	write_to_file("docs/ascending.csv".to_string(), vect2); //Writing
+	write_to_file("docs/descending.csv".to_string(), vect4); //Writing
 }
 
-fn make_file(file_name: String) {
+fn make_file(file_name: String) { //Making file (same as in main.rs)
     std::fs::File::create(&file_name).expect("\nCreation failed");
     println!("\n\nCreated file named {} \nPATH: docs/{}\n", &file_name, &file_name);
 }
 
 fn write_to_file(file: String, text: String) {
-	let mut file = OpenOptions::new()
-		.append(true)
+	let mut file = OpenOptions::new() //Opening
+		.append(true) //Appening
 		.open(&file)
-		.expect("\nCannot Open File.");
+		.expect("\nCannot Open File."); //Error response
 
 	file
-		.write_all(text.as_bytes())
-		.expect("\nWrite Failed");
+		.write_all(text.as_bytes()) //writing as bytes
+		.expect("\nWrite Failed"); //Error response
 
-	println!("Successfully appended sorted list of numbers to file {:?}.", file);
-}
-
-fn sortme(list: Vec<f64>) {
-	for i in 0..list.len() {
-		let mut big = list[i];
-		for j in 0..list.len() {
-			let num2 = list[i+1];
-			if big < num2 {
-				big = num2;
-			}
-		let ans: Vec<f64> = vec![];
-		ans.push(big);
-		println!("{:?}", ans);
-		}
-	}
+	println!("Successfully appended sorted list of numbers to file {:?}.", file); //printing ans(for user)
 }
