@@ -5,11 +5,27 @@ use rand::Rng;
 use std::fs::OpenOptions;
 use std::io::Write;
 
+mod arrange;
+
 fn main() {
+	let mode = std::env::args().nth(1).expect("Please provide a mode: make/sort");
+	if mode == "make" {
+		main2();
+	} else if mode == "sort" {
+		arrange::sort();
+	}
+	// match mode {
+	// 	sort => arrange::main(),
+	// 	make => main2(),
+	// 	_ => eprintln!("Please give a mode!"),
+	// }
+}
+
+fn main2() {
     //Main
-    let file = std::env::args().nth(1).expect("Give File"); // Getting file name.
+    let file = std::env::args().nth(2).expect("Give File"); // Getting file name.
     let numofnums: i32 = std::env::args()
-        .nth(2) //Second value
+        .nth(3) //Second value
         .expect("Give Num - only i32") //Error response
         .parse()
         .unwrap(); //Converting to i32

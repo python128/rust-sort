@@ -5,14 +5,14 @@ use std::fs::OpenOptions;
 use std::io::Read;
 use std::io::Write;
 
-fn main() {
+pub fn sort() {
     //Main
-    let file = std::env::args().nth(1).expect("Give a file to sort!"); //Getting file to sort
+    let file = std::env::args().nth(2).expect("Give a file to sort!"); //Getting file to sort
                                                                        //Making Ascending and descending.csv files.
-    make_file("docs/ascending.csv".to_string());
-    make_file("docs/descending.csv".to_string());
+    make_file("ascending.csv".to_string());
+    make_file("descending.csv".to_string());
     read(file); //reading file
-    println!("Have a look at docs/ascending.csv and/or docs/descending.csv!"); //After all
+    println!("Have a look at ascending.csv and/or descending.csv!"); //After all
 }
 
 fn read(filename: String) {
@@ -22,7 +22,7 @@ fn read(filename: String) {
         .unwrap();
     let contents = &contents.to_string(); //Converting to string(as it is stored in f64 format).
 
-    let split = contents.split(", "); //splitting the contents
+    let split = contents.split(",\n"); //splitting the contents
     let vec: Vec<&str> = split.collect(); //collecting them
     let mut vect = vec![]; //vect1 (for f64 val) [ascending]
     let mut vect2 = vec![]; //vector2 (for String val) [ascending]
@@ -50,17 +50,17 @@ fn read(filename: String) {
         vect4.push(ab); //pushing
     }
 
-    let vect2 = vect2.join(", "); //joining as string
-    let vect4 = vect4.join(", "); //joining as string
-    write_to_file("docs/ascending.csv".to_string(), vect2); //Writing
-    write_to_file("docs/descending.csv".to_string(), vect4); //Writing
+    let vect2 = vect2.join(",\n"); //joining as string
+    let vect4 = vect4.join(",\n"); //joining as string
+    write_to_file("ascending.csv".to_string(), vect2); //Writing
+    write_to_file("descending.csv".to_string(), vect4); //Writing
 }
 
 fn make_file(file_name: String) {
     //Making file (same as in main.rs)
     std::fs::File::create(&file_name).expect("\nCreation failed");
     println!(
-        "\n\nCreated file named {} \nPATH: docs/{}\n",
+        "\n\nCreated file named {} \nPATH: {}\n",
         &file_name, &file_name
     );
 }
